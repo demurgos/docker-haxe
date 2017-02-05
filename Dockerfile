@@ -1,7 +1,7 @@
 FROM debian:stretch
 
 # Global dependencies
-RUN echo "deb http://deb.debian.org/debian stretch contrib" >> /etc/apt/sources.list \
+RUN echo "deb http://deb.debian.org/debian jessie contrib" >> /etc/apt/sources.list \
   && echo "deb http://http.debian.net/debian unstable main" >> /etc/apt/sources.list \
   && apt-get update \
   && apt-get install -y -t unstable \
