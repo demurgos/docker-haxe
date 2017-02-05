@@ -1,36 +1,30 @@
 FROM debian:stretch
 
 # Global dependencies
-RUN apt-get update \
+RUN echo "deb http://deb.debian.org/debian stretch contrib" >> /etc/apt/sources.list \
+  && echo "deb http://http.debian.net/debian unstable main" >> /etc/apt/sources.list \
+  && apt-get update \
+  && apt-get install -y -t unstable \
+    firefox
   && apt-get install -y \
+    apache2-dev \
     camlp4 \
-    firefox-esr \
+    ca-certificates \
+    cmake \
+    flashplugin-nonfree \
     git \
+    libgc-dev \
+    libgtk2.0-dev \
+    libmariadb-client-lgpl-dev-compat \
+    libmbedtls-dev \
+    libpcre3-dev \
+    libsqlite3-dev \
+    libssl-dev \
     make \
-    neko \
     ocaml \
     xvfb \
     zlib1g-dev \
   && rm -rf /var/lib/apt/lists/*
-
-# Neko dependencies
-RUN apt-get purge -y neko
-RUN apt-get update \
-  && apt-get install -y \
-    libgc-dev \
-    libssl-dev \
-    libpcre3-dev \
-    zlib1g-dev \
-    apache2-dev \
-    libmariadb-client-lgpl-dev-compat \
-    libsqlite3-dev \
-    libmbedtls-dev \
-    libgtk2.0-dev \
-  && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update \
-  && apt-get install -y \
-    cmake
 
 # Neko configuration
 ENV NEKO_SRC_PATH /src/neko
