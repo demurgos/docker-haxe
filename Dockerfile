@@ -5,7 +5,7 @@ RUN echo "deb http://deb.debian.org/debian stretch contrib" >> /etc/apt/sources.
   && echo "deb http://http.debian.net/debian unstable main" >> /etc/apt/sources.list \
   && apt-get update \
   && apt-get install -y -t unstable \
-    firefox
+    firefox \
   && apt-get install -y \
     apache2-dev \
     camlp4 \
