@@ -13,6 +13,7 @@ RUN echo "deb http://http.debian.net/debian unstable main" >> /etc/apt/sources.l
   && apt-get update \
   && apt-get install --no-install-recommends --assume-yes \
     ca-certificates \
+    dbus \
     dirmngr \
     gnupg \
     hicolor-icon-theme \
@@ -22,12 +23,7 @@ RUN echo "deb http://http.debian.net/debian unstable main" >> /etc/apt/sources.l
 	&& apt-get install --no-install-recommends --assume-yes --target-release unstable \
     firefox \
 	&& rm -rf /var/lib/apt/lists/*
-
-# TODO: Add this to the firefox block:
-RUN apt-get update \
-  && apt-get install --no-install-recommends --assume-yes \
-    dbus \
-	&& rm -rf /var/lib/apt/lists/*
+COPY local.conf /etc/fonts/local.conf
 
 # Global dependencies
 # Jessie contrib for flashplugin-nonfree
@@ -52,7 +48,7 @@ RUN echo "deb http://deb.debian.org/debian jessie contrib" >> /etc/apt/sources.l
     zlib1g-dev \
   && rm -rf /var/lib/apt/lists/*
 
-# Neko installation from source
+# Neko installation from source, because Haxelib does not work when installing neko with apt-get
 RUN NEKO_SRC_PATH="/src/neko/" \
   && NEKO_REPOSITORY="https://github.com/HaxeFoundation/neko.git" \
   && NEKO_BRANCH="master" \
@@ -80,7 +76,7 @@ RUN HAXE_SRC_PATH="/src/haxe/" \
   && cd / \
   && echo "$HAXELIB_REPOSITORY_PATH" | haxelib setup
 
-# Haxelib packages
+# Haxelib packages for Flash development
 RUN haxelib install lime 2.3.3 \
   && haxelib install munit 2.1.2 \
   && haxelib install openfl 3.0.1 \
