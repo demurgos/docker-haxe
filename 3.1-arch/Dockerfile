@@ -48,7 +48,7 @@ RUN HAXE_SRC_PATH="/src/haxe/" \
 
 RUN pacman -Syu --quiet --noconfirm --noprogressbar \
   && pacman -S --quiet --noconfirm --noprogressbar \
-    node \
+    nodejs \
   && npm install -g npm gulp-cli
 
 # Haxelib packages for Flash development
