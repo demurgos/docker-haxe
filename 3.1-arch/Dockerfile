@@ -46,6 +46,11 @@ RUN HAXE_SRC_PATH="/src/haxe/" \
   && cd / \
   && echo "$HAXELIB_REPOSITORY_PATH" | haxelib setup
 
+RUN pacman -Syu --quiet --noconfirm --noprogressbar \
+  && pacman -S --quiet --noconfirm --noprogressbar \
+    node \
+  && npm install -g npm gulp-cli
+
 # Haxelib packages for Flash development
 RUN haxelib install lime 2.3.3 \
   && haxelib install munit 2.1.2 \
