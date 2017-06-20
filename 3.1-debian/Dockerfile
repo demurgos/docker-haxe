@@ -14,6 +14,7 @@ RUN echo "deb http://http.debian.net/debian unstable main" >> /etc/apt/sources.l
   && apt-get install --no-install-recommends --assume-yes \
     ca-certificates \
     dbus \
+    expect \
     dirmngr \
     gnupg \
     hicolor-icon-theme \

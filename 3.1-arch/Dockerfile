@@ -9,13 +9,14 @@ MAINTAINER Charles Samborski <demurgos@demurgos.net>
 # xhost local:docker && docker run -it -e DISPLAY -v $HOME/.Xauthority:/home/root/.Xauthority --net=host haxe-3.1
 
 # Packages (for Flash development with Haxe)
-# Utils: git, coreutils (provides `timeout` and `true`)
+# Utils: git, coreutils (provides `timeout` and `true`), expect
 # Haxe compilation: camlp4, gcc (provides `as`), make, neko, ocaml, pcre, zlib
 # Flash dev: firefox, flashpluginm, xorg-server-xvfb
 RUN pacman -Syu --quiet --noconfirm --noprogressbar \
   && pacman -S --quiet --noconfirm --noprogressbar \
     camlp4 \
     coreutils \
+    expect \
     firefox \
     flashplugin \
     gcc \
