@@ -23,9 +23,12 @@ RUN pacman -Syu --quiet --noconfirm --noprogressbar \
     git \
     make \
     neko \
+    nodejs \
+    npm \
     ocaml \
     pcre \
     xorg-server-xvfb \
+    yarn \
     zlib
 
 # Initialize firefox by running it once
@@ -37,7 +40,7 @@ ENV HAXE_STD_PATH /usr/lib/haxe/std/:.
 # HAXELIB_REPOSITORY_PATH points to the root of Haxelib's local repository
 ENV HAXELIB_REPOSITORY_PATH /usr/lib/haxe/lib/
 RUN HAXE_SRC_PATH="/src/haxe/" \
-  && HAXE_REPOSITORY="https://github.com/demurgos/haxe.git" \
+  && HAXE_REPOSITORY="https://github.com/HaxeFoundation/haxe.git" \
   && HAXE_BRANCH="3.1_bugfix" \
   && git clone --recursive --branch "$HAXE_BRANCH" "$HAXE_REPOSITORY" "$HAXE_SRC_PATH" \
   && cd "$HAXE_SRC_PATH" \
@@ -47,16 +50,6 @@ RUN HAXE_SRC_PATH="/src/haxe/" \
   && cd / \
   && echo "$HAXELIB_REPOSITORY_PATH" | haxelib setup
 
-RUN pacman -Syu --quiet --noconfirm --noprogressbar \
-  && pacman -S --quiet --noconfirm --noprogressbar \
-    nodejs \
-    npm \
-  && npm install -g npm gulp-cli
-
-# Haxelib packages for Flash development
-RUN haxelib install lime 2.3.3 \
-  && haxelib install munit 2.1.2 \
-  && haxelib install openfl 3.0.1 \
-  && haxelib install svg 1.1.1
+RUN npm install -g npm gulp-cli
 
 CMD ["/bin/bash"]
