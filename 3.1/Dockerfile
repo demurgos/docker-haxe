@@ -40,7 +40,7 @@ ENV HAXE_STD_PATH /usr/lib/haxe/std/:.
 # HAXELIB_REPOSITORY_PATH points to the root of Haxelib's local repository
 ENV HAXELIB_REPOSITORY_PATH /usr/lib/haxe/lib/
 RUN HAXE_SRC_PATH="/src/haxe/" \
-  && HAXE_REPOSITORY="https://github.com/HaxeFoundation/haxe.git" \
+  && HAXE_REPOSITORY="https://github.com/demurgos/haxe.git" \
   && HAXE_BRANCH="3.1_bugfix" \
   && git clone --recursive --branch "$HAXE_BRANCH" "$HAXE_REPOSITORY" "$HAXE_SRC_PATH" \
   && cd "$HAXE_SRC_PATH" \
