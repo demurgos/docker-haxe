@@ -17,6 +17,7 @@ RUN pacman -Syu --quiet --noconfirm --noprogressbar \
     camlp4 \
     coreutils \
     expect \
+    fakeroot \
     firefox \
     flashplugin \
     gcc \
@@ -27,6 +28,7 @@ RUN pacman -Syu --quiet --noconfirm --noprogressbar \
     npm \
     ocaml \
     pcre \
+    sudo \
     xorg-server-xvfb \
     yarn \
     zlib
@@ -56,15 +58,13 @@ COPY sudoers /etc/sudoers
 RUN chmod 440 /etc/sudoers
 RUN groupadd sudo && useradd --create-home -G sudo -s /bin/bash aur
 
-#RUN pacman -S --noconfirm fakeroot pkgbuild-introspection
-
-# `aur` developer
+# Use the `aur` user to install `swfmill
 
 RUN SWFMILL_PATH="/src/swfmill/" \
   && SWFMILL_REPOSITORY="https://aur.archlinux.org/swfmill.git" \
   && git clone "${SWFMILL_REPOSITORY}" "${SWFMILL_PATH}" \
   && chown -R aur "${SWFMILL_PATH}" \
-  && su -l aur -c "cd \"\${SWFMILL_PATH}\" && makepkg --noconfirm --syncdeps --install"
+  && su -l aur -c "cd \"${SWFMILL_PATH}\" && makepkg --noconfirm --syncdeps --install"
 
 RUN npm install -g gulp-cli
 
