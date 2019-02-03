@@ -51,6 +51,11 @@ RUN HAXE_SRC_PATH="/src/haxe/" \
   && cd / \
   && echo "${HAXELIB_REPOSITORY_PATH}" | haxelib setup
 
+RUN cd "${HAXELIB_REPOSITORY_PATH}"
+  && cd hxcpp/git
+  && cd tools/hxcpp
+  && haxe compile.hxml
+
 RUN npm install -g npm gulp-cli
 
 CMD ["/bin/bash"]

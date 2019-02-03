@@ -1,0 +1,3 @@
+Defaults !authenticate
+# Enable members of the `sudo` _group_:
+%sudo ALL=(ALL) ALL

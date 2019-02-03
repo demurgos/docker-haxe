@@ -42,15 +42,30 @@ ENV HAXELIB_REPOSITORY_PATH /usr/lib/haxe/lib/
 RUN HAXE_SRC_PATH="/src/haxe/" \
   && HAXE_REPOSITORY="https://github.com/HaxeFoundation/haxe.git" \
   && HAXE_BRANCH="3.1_bugfix" \
-  && git clone --recursive --branch "$HAXE_BRANCH" "$HAXE_REPOSITORY" "$HAXE_SRC_PATH" \
-  && cd "$HAXE_SRC_PATH" \
+  && git clone --recursive --branch "${HAXE_BRANCH}" "${HAXE_REPOSITORY}" "${HAXE_SRC_PATH}" \
+  && cd "${HAXE_SRC_PATH}" \
   # Haxe 3 is incompatible with safe-string
   && OCAMLPARAM="safe-string=0,_" make \
   && make install \
   # Haxelib configuration, must be executed outside of the Haxe sources
   && cd / \
-  && echo "$HAXELIB_REPOSITORY_PATH" | haxelib setup
+  && echo "${HAXELIB_REPOSITORY_PATH}" | haxelib setup
 
-RUN npm install -g npm gulp-cli
+# Passwordless sudo for the user `aur`
+COPY sudoers /etc/sudoers
+RUN chmod 440 /etc/sudoers
+RUN groupadd sudo && useradd --create-home -G sudo -s /bin/bash aur
+
+#RUN pacman -S --noconfirm fakeroot pkgbuild-introspection
+
+# `aur` developer
+
+RUN SWFMILL_PATH="/src/swfmill/" \
+  && SWFMILL_REPOSITORY="https://aur.archlinux.org/swfmill.git" \
+  && git clone "${SWFMILL_REPOSITORY}" "${SWFMILL_PATH}" \
+  && chown -R aur "${SWFMILL_PATH}" \
+  && su -l aur -c "cd \"\${SWFMILL_PATH}\" && makepkg --noconfirm --syncdeps --install"
+
+RUN npm install -g gulp-cli
 
 CMD ["/bin/bash"]
