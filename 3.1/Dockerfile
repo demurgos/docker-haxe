@@ -14,6 +14,7 @@ MAINTAINER Charles Samborski <demurgos@demurgos.net>
 # Flash dev: firefox, flashpluginm, xorg-server-xvfb
 RUN pacman -Syu --quiet --noconfirm --noprogressbar \
   && pacman -S --quiet --noconfirm --noprogressbar \
+    base-devel \
     camlp4 \
     coreutils \
     expect \
