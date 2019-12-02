@@ -1,4 +1,4 @@
-FROM base/archlinux:latest
+FROM archlinux:latest
 MAINTAINER Charles Samborski <demurgos@demurgos.net>
 
 # Build:
@@ -19,7 +19,6 @@ RUN pacman -Syu --quiet --noconfirm --noprogressbar \
     coreutils \
     expect \
     fakeroot \
-    firefox-esr \
     flashplugin \
     gcc \
     git \
@@ -33,9 +32,6 @@ RUN pacman -Syu --quiet --noconfirm --noprogressbar \
     xorg-server-xvfb \
     yarn \
     zlib
-
-# Initialize firefox by running it once
-RUN timeout 20s xvfb-run firefox; true
 
 # Haxe 3.1_bugfix installation from source
 # HAXE_STD_PATH is required for Haxelib and normal execution
@@ -59,8 +55,17 @@ COPY sudoers /etc/sudoers
 RUN chmod 440 /etc/sudoers
 RUN groupadd sudo && useradd --create-home -G sudo -s /bin/bash aur
 
-# Use the `aur` user to install `swfmill
+# Use the `aur` user to install `firefox-esr-bin`
+RUN FIREFOX_ESR_BIN_PATH="/src/firefox-esr-bin/" \
+  && FIREFOX_ESR_BIN_REPOSITORY="https://aur.archlinux.org/firefox-esr-bin.git" \
+  && git clone "${FIREFOX_ESR_BIN_REPOSITORY}" "${FIREFOX_ESR_BIN_PATH}" \
+  && chown -R aur "${FIREFOX_ESR_BIN_PATH}" \
+  && su -l aur -c "cd \"${FIREFOX_ESR_BIN_PATH}\" && makepkg --noconfirm --syncdeps --install"
 
+# Initialize firefox by running it once
+RUN timeout 20s xvfb-run firefox-esr; true
+
+# Use the `aur` user to install `swfmill
 RUN SWFMILL_PATH="/src/swfmill/" \
   && SWFMILL_REPOSITORY="https://aur.archlinux.org/swfmill.git" \
   && git clone "${SWFMILL_REPOSITORY}" "${SWFMILL_PATH}" \
