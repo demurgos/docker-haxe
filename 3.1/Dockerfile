@@ -20,9 +20,11 @@ RUN pacman -Syu --quiet --noconfirm --noprogressbar \
     coreutils \
     expect \
     fakeroot \
+    ffmpeg \
     flashplugin \
     gcc \
     git \
+    jq \
     make \
     neko \
     nodejs \
