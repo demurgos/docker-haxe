@@ -17,7 +17,7 @@ RUN pacman -Syu --quiet --noconfirm --noprogressbar \
     camlp4 \
     coreutils \
     expect \
-    firefox \
+    firefox-esr \
     flashplugin \
     gcc \
     git \

@@ -19,7 +19,7 @@ RUN pacman -Syu --quiet --noconfirm --noprogressbar \
     coreutils \
     expect \
     fakeroot \
-    firefox \
+    firefox-esr \
     flashplugin \
     gcc \
     git \
