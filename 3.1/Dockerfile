@@ -58,12 +58,12 @@ COPY sudoers /etc/sudoers
 RUN chmod 440 /etc/sudoers
 RUN groupadd sudo && useradd --create-home -G sudo -s /bin/bash aur
 
-# Use the `aur` user to install `firefox-esr68`
-RUN FIREFOX_ESR68_PATH="/src/firefox-esr68/" \
-  && FIREFOX_ESR68_REPOSITORY="https://aur.archlinux.org/firefox-esr68.git" \
-  && git clone "${FIREFOX_ESR68_REPOSITORY}" "${FIREFOX_ESR68_PATH}" \
-  && chown -R aur "${FIREFOX_ESR68_PATH}" \
-  && su -l aur -c "cd \"${FIREFOX_ESR68_PATH}\" && makepkg --noconfirm --syncdeps --install"
+# Use the `aur` user to install `firefox-esr68-bin`
+RUN FIREFOX_ESR68_BIN_PATH="/src/firefox-esr68-bin/" \
+  && FIREFOX_ESR68_BIN_REPOSITORY="https://aur.archlinux.org/firefox-esr68-bin.git" \
+  && git clone "${FIREFOX_ESR68_BIN_REPOSITORY}" "${FIREFOX_ESR68_BIN_PATH}" \
+  && chown -R aur "${FIREFOX_ESR68_BIN_PATH}" \
+  && su -l aur -c "cd \"${FIREFOX_ESR68_BIN_PATH}\" && makepkg --noconfirm --syncdeps --install"
 
 # Initialize firefox by running it once
 RUN timeout 20s xvfb-run firefox; true
