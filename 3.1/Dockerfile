@@ -66,7 +66,7 @@ RUN FIREFOX_ESR68_BIN_PATH="/src/firefox-esr68-bin/" \
   && su -l aur -c "cd \"${FIREFOX_ESR68_BIN_PATH}\" && makepkg --noconfirm --syncdeps --install"
 
 # Initialize firefox by running it once
-RUN timeout 20s xvfb-run firefox; true
+RUN timeout 20s xvfb-run firefox-esr68; true
 
 # Use the `aur` user to install `swfmill
 RUN SWFMILL_PATH="/src/swfmill/" \
